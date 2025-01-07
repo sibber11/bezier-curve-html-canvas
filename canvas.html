@@ -120,7 +120,7 @@
     function offset(el) {
         let rect = el.getBoundingClientRect(),
             scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
-            scrollTop = window.scrollY || window.pageYOffset;
+            scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         return { y: rect.top + scrollTop, x: rect.left + scrollLeft }
     }
 
@@ -149,14 +149,13 @@
 
     let isb = false;
     let points = [];
-    let canvasOffset = offset(canvas);
+    //let canvasOffset = offset(canvas);
 
     window.addEventListener('mousemove', function (e) {
         ctx.clearRect(0, 0, 400, 400);
         point_two.style.left = e.clientX + 'px';
         point_two.style.top = e.clientY + 'px';
         let last = printall();
-        canvasOffset = offset(canvas);
         if (last) {
             bez(last, getPoint(e), isb);
         }
@@ -165,7 +164,6 @@
     window.addEventListener('click', function (e) {
         points.push(getPoint(e));
         printall();
-      console.log(window.scrollY)
     })
 
     window.addEventListener('contextmenu', function (e) {
