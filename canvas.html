@@ -120,7 +120,7 @@
     function offset(el) {
         let rect = el.getBoundingClientRect(),
             scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
-            scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            scrollTop = window.scrollY || window.pageYOffset;
         return { y: rect.top + scrollTop, x: rect.left + scrollLeft }
     }
 
@@ -128,6 +128,7 @@
      * returns event point
      */
     function getPoint(e) {
+      let canvasOffset = canvas.getBoundingClientRect();
         return {
             x: e.clientX - canvasOffset.x,
             y: e.clientY - canvasOffset.y,
@@ -155,6 +156,7 @@
         point_two.style.left = e.clientX + 'px';
         point_two.style.top = e.clientY + 'px';
         let last = printall();
+        canvasOffset = offset(canvas);
         if (last) {
             bez(last, getPoint(e), isb);
         }
@@ -163,6 +165,7 @@
     window.addEventListener('click', function (e) {
         points.push(getPoint(e));
         printall();
+      console.log(window.scrollY)
     })
 
     window.addEventListener('contextmenu', function (e) {
